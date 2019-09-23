@@ -13,6 +13,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style  scoped lang="stylus">
+.wrapper
+  font-size 22px
+  width 100px
+  background red
+  height 100px
 </style>
