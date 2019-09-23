@@ -6,3 +6,6 @@
 <style lang="stylus">
 
 </style>
+<script>
+
+</script>
