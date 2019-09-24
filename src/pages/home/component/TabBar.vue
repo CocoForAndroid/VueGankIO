@@ -32,6 +32,10 @@ export default {
 <style scoped lang="stylus">
   .tab-wrapper
     display flex
+    position: fixed;
+    left 0
+    right 0
+    top 0
     width 100%
     &>ul
       display flex
@@ -55,7 +59,7 @@ export default {
         left 100%
         width 0
         height 100%
-        transition: 0.2s all linear
+        transition: 0.1s all linear
         border-bottom 1px solid themeColor
       .active
         color themeColor

@@ -2,7 +2,7 @@ import httpRequest from './http'
 
 /**
  * 获取最新一天干货
- * @return {Promise<AxiosResponse<T>>}
+ * @return
  */
 const getLatestGankData = () => {
   return httpRequest.request({
@@ -11,7 +11,7 @@ const getLatestGankData = () => {
 }
 /**
  * 获取闲读
- * @return {Promise<AxiosResponse<T>>}
+ * @return
  */
 const getXianDuCategory = () => {
   return httpRequest.request({
@@ -21,7 +21,7 @@ const getXianDuCategory = () => {
 /**
  * 获取闲读子分类
  * @param name 不同子分类
- * @return {Promise<AxiosResponse<T>>}
+ *
  */
 const getXianDuChild = (name = 'android') => {
   return httpRequest.request({
@@ -39,9 +39,21 @@ const getXianDuList = (page, count, id) => {
     url: `api/xiandu/data/id/${id}/count/${count}/page/${page}`
   })
 }
+/**
+ *
+ * @param type 类型(福利,android.ios等)
+ * @param pageSize 数量
+ * @param page 页数
+ */
+const getCategoriesList = (type, pageSize, page) => {
+  return httpRequest.request({
+    url: `api/data/${type}/${pageSize}/${page}`
+  })
+}
 export {
   getLatestGankData,
   getXianDuCategory,
   getXianDuChild,
-  getXianDuList
+  getXianDuList,
+  getCategoriesList
 }
