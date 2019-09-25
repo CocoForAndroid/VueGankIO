@@ -1,10 +1,10 @@
 <template>
-    <div class="girl-list-wrapper">
+    <div class="girl-list-wrapper" ref="list">
        <div class="item" v-for="item of imgArray" :key='item._id'>
          <img v-lazy="item.url"  alt="" />
        </div>
       <div :class="['float-btn' ,doRotate?'rotate':'']" @click="refresh">
-        <i :class="['iconfont', animateFinish?'iconcheck':'iconRefresh']"></i>
+        <i :class="['iconfont', 'iconRefresh']"></i>
       </div>
     </div>
 </template>
@@ -17,15 +17,30 @@ export default {
       doRotate: false// 执行旋转动画
     }
   },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll, true)
+  },
   props: {
     animateFinish: {
-      type: Boolean
+      type: Boolean,
+      defaultValue: false
     },
     imgArray: {
       type: Array
     }
   },
   methods: {
+    handleScroll (e) {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      // 计算透明度值
+      let dstNum = 150
+      let opacity = this._.ceil(this._.subtract(1, this._.divide(scrollTop, dstNum)), 1)
+      if (opacity <= 0) {
+        opacity = 0
+      }
+      console.log('透明度' + opacity)
+      this.bus.$emit('sendOpacity', opacity)
+    },
     // 刷新福利图片
     refresh () {
       this.doRotate = true
@@ -34,8 +49,10 @@ export default {
   },
   watch: {
     animateFinish: function (val) {
-      console.log(`当前动画是否结束:${val}`)
+      console.log(val)
+      this.doRotate = !val
     }
+
   }
 }
 </script>

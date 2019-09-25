@@ -7,7 +7,9 @@ import VueLazyload from 'vue-lazyload'
 import './font/iconfont.css'
 import { Toast } from 'vant'
 import _ from 'lodash'
-
+// 挂载事件总线
+Vue.prototype.bus = new Vue()
+// loadsh
 Vue.prototype._ = _
 Vue.component('toast', { [Toast.name]: Toast })
 Vue.config.productionTip = false

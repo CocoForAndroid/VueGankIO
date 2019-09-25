@@ -14,7 +14,6 @@ if (process.env.NODE_ENV === 'production') {
 httpRequest.defaults.timeout = 1000
 // 响应拦截
 httpRequest.interceptors.response.use(response => {
-  console.log('拦截器:' + JSON.stringify(response))
   if (response.data.error == false) {
     return response.data
   } else {

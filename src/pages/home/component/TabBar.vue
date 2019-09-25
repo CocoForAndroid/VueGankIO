@@ -1,5 +1,5 @@
 <template>
-    <div class="tab-wrapper">
+    <div class="tab-wrapper" :style="{opacity:alpha}" >
       <ul>
         <li :key="index" v-for="(item,index) of arrays" :class="[currentIndex===index?'active':'']" @click="selectTab(index)">{{item}}</li>
       </ul>
@@ -10,6 +10,7 @@
 export default {
   data () {
     return {
+      alpha: 0,
       currentIndex: 0
     }
   },
@@ -19,6 +20,11 @@ export default {
       type: Array,
       required: true
     }
+  },
+  mounted () {
+    this.bus.$on('sendOpacity', value => {
+      this.alpha = value
+    })
   },
   methods: {
     selectTab (index) {
@@ -35,6 +41,7 @@ export default {
     position: fixed;
     left 0
     right 0
+    background white
     top 0
     width 100%
     &>ul
