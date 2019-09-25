@@ -4,7 +4,11 @@ import router from './router'
 import store from './store'
 import '../src/style/reset.css'
 import VueLazyload from 'vue-lazyload'
+import './font/iconfont.css'
 import { Toast } from 'vant'
+import _ from 'lodash'
+
+Vue.prototype._ = _
 Vue.component('toast', { [Toast.name]: Toast })
 Vue.config.productionTip = false
 Vue.use(VueLazyload, {

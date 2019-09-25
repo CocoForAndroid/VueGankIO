@@ -9,7 +9,7 @@
 
       </van-list>
     </van-pull-refresh>
-    <girl-list :img-array="girlImages"></girl-list>
+    <girl-list :img-array="girlImages" @refreshGirl="getRandomGrils" :animateFinish="finishAnimate"></girl-list>
   </div>
 </template>
 
@@ -25,12 +25,13 @@ import { PullRefresh, List } from 'vant'
 export default {
   data () {
     return {
+      finishAnimate: false,
       isArticle: false, // 是否显示文章列表
       isLoading: false,
       loading: false,
       finished: false,
       page: 1,
-      pageSize: 10,
+      pageSize: 15,
       tabs: ['福利', '闲读', 'Android', 'IOS', '前端'],
       type: '福利',
       girlImages: [] // 福利图片
@@ -46,6 +47,16 @@ export default {
   },
   methods: {
     onLoad () {
+
+    },
+    // 更新福利列表
+    getRandomGrils () {
+      // 生成随机页数
+      const randomPage = this._.random(1, 10, false)
+      console.log(`currentPage:${randomPage}`)
+      this.type = '福利'
+      this.page = randomPage
+      this.getGirlsData()
 
     },
     onRefresh () {
