@@ -9,7 +9,10 @@
 
       </van-list>
     </van-pull-refresh>
-    <girl-list :img-array="girlImages" @refreshGirl="getRandomGirls"  :animateFinish="finishAnimate" ></girl-list>
+    <girl-list :img-array="girlImages"
+               @handleImgClick="previewImg"
+               @refreshGirl="getRandomGirls"
+               :animateFinish="finishAnimate" ></girl-list>
   </div>
 </template>
 
@@ -47,6 +50,14 @@ export default {
     this.getGirlsData()
   },
   methods: {
+    previewImg (index) {
+      this.$router.push({ name: 'preview',
+        params: {
+          imgs: this.girlImages,
+          currentIndex: index
+        }
+      })
+    },
     onLoad () {
 
     },
@@ -66,7 +77,7 @@ export default {
     },
     getGirlsData () {
       getCategoriesList(this.type, this.pageSize, this.page).then(res => {
-        if (this.type == '福利') {
+        if (this.type === '福利') {
           // 图片类型
           this.girlImages = res.results
           if (this.inAnimate) {

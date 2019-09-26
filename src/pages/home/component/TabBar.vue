@@ -10,7 +10,7 @@
 export default {
   data () {
     return {
-      alpha: 0,
+      alpha: 1,
       currentIndex: 0
     }
   },

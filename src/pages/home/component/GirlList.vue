@@ -1,6 +1,6 @@
 <template>
-    <div class="girl-list-wrapper" ref="list">
-       <div class="item" v-for="item of imgArray" :key='item._id'>
+    <div class="girl-list-wrapper" >
+       <div class="item" v-for="(item,index) of imgArray" :key='item._id' @click="itemClick(index)">
          <img v-lazy="item.url"  alt="" />
        </div>
       <div :class="['float-btn' ,doRotate?'rotate':'']" @click="refresh">
@@ -30,6 +30,9 @@ export default {
     }
   },
   methods: {
+    itemClick (index) {
+      this.$emit('handleImgClick',index)
+    },
     handleScroll (e) {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       // 计算透明度值
