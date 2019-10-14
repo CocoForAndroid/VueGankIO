@@ -28,6 +28,7 @@ export default {
   },
   methods: {
     selectTab (index) {
+      console.log('tab click')
       this.currentIndex = index
       this.$emit('getSelectTab', index)
     }
@@ -43,6 +44,7 @@ export default {
     right 0
     background white
     top 0
+    z-index 100
     width 100%
     &>ul
       display flex
