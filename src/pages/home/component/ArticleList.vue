@@ -1,21 +1,26 @@
 <template>
   <div class="article-wrapper">
     <div class="item" v-for="(item, index) in items" :key="index">
-      <div class="desc">{{item.desc}}</div>
+      <div class="desc" @click="handleItemClick(item.url)">{{item.desc}}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "ArticleList.vue",
+  name: 'ArticleList.vue',
   props: {
     items: {
       type: Array,
       required: true
     }
+  },
+  methods: {
+    handleItemClick (url) {
+      window.location.href = url
+    }
   }
-};
+}
 </script>
 
 <style scoped lang="stylus">
@@ -37,7 +42,5 @@ export default {
         width 100%
         text-overflow  ellipsis
         white-space nowrap
-        
-
 
 </style>

@@ -13,21 +13,19 @@
       @refreshGirl="getRandomGirls"
       :animateFinish="finishAnimate"
     ></girl-list>
+    <empty-place-holder v-if="articleList.length==0||girlImages.length==0"></empty-place-holder>
   </div>
 </template>
 
 <script>
-import {
-  getLatestGankData,
-  getCategoriesList,
-  getXianDuCategory
-} from "../../request/api";
-import TabBar from "./component/TabBar";
-import GirlList from "./component/GirlList";
-import ArticleList from "./component/ArticleList";
-import { PullRefresh, List } from "vant";
+import { getCategoriesList } from '../../request/api'
+import TabBar from './component/TabBar'
+import GirlList from './component/GirlList'
+import ArticleList from './component/ArticleList'
+import { List, PullRefresh } from 'vant'
+import EmptyPlaceHolder from './component/EmptyPlaceHolder'
 export default {
-  data() {
+  data () {
     return {
       inAnimate: false, // 是否处于动画中
       finishAnimate: false,
@@ -36,95 +34,98 @@ export default {
       finished: false,
       page: 1,
       pageSize: 15,
-      tabs: ["福利", "闲读", "Android", "IOS", "前端"],
-      type: "福利",
+      tabs: ['福利', '闲读', 'Android', 'IOS', '前端'],
+      type: '福利',
       currentTabIndex: 0,
-      articleList: [], //文章内容
+      articleList: [], // 文章内容
       girlImages: [] // 福利图片
-    };
+    }
   },
-  name: "Home",
+  name: 'Home',
   components: {
+    EmptyPlaceHolder,
     GirlList,
     TabBar,
     ArticleList,
     [PullRefresh.name]: PullRefresh,
     [List.name]: List
   },
-  mounted() {
-    this.getGirlsData(false);
+  mounted () {
+    this.getGirlsData(false)
   },
   methods: {
-    //tab切换
-    handleTabChange(index) {
-      this.currentTabIndex = index;
-      this.type = this.tabs[index];
+    // tab切换
+    handleTabChange (index) {
+      this.currentTabIndex = index
+      this.type = this.tabs[index]
       if (index == 0) {
-        this.getRandomGirls();
+        this.getRandomGirls()
       } else {
-        this.page = 1;
-        this.getGirlsData(false);
+        this.page = 1
+        this.getGirlsData(false)
       }
     },
-    previewImg(index) {
+    previewImg (index) {
       this.$router.push({
-        name: "preview",
+        name: 'preview',
         params: {
           imgs: this.girlImages,
           currentIndex: index
         }
-      });
+      })
     },
-    onLoad() {
+    onLoad () {
       console.log('loadMore')
-      this.page += 1;
-      this.getGirlsData(true);
+      this.page += 1
+      this.getGirlsData(true)
     },
     // 更新福利列表
-    getRandomGirls() {
+    getRandomGirls () {
       // 生成随机页数
-      const randomPage = this._.random(1, 5, false);
-      console.log(`currentPage:${randomPage}`);
-      this.type = "福利";
-      this.page = randomPage;
-      this.finishAnimate = false;
-      this.inAnimate = true;
-      this.getGirlsData(false);
+      const randomPage = this._.random(1, 5, false)
+      console.log(`currentPage:${randomPage}`)
+      this.type = '福利'
+      this.page = randomPage
+      this.finishAnimate = false
+      this.inAnimate = true
+      this.getGirlsData(false)
     },
-    onRefresh() {
-      this.page = 1;
-      this.getGirlsData(false);
+    onRefresh () {
+      this.page = 1
+      this.getGirlsData(false)
     },
-    getGirlsData(loadMore) {
+    getGirlsData (loadMore) {
       getCategoriesList(this.type, this.pageSize, this.page).then(res => {
-        if (this.type === "福利") {
+        if (this.type === '福利') {
           // 图片类型
-          this.girlImages = res.results;
+          this.girlImages = res.results
           if (this.inAnimate) {
             setTimeout(() => {
-              this.finishAnimate = true;
-            }, 500);
+              this.finishAnimate = true
+            }, 500)
           }
         } else {
           // 文章类型
           if (loadMore) {
-            if (res.results.length==0) {
+            if (res.results.length == 0) {
               console.log('empty')
-              this.loading = false;
-              this.finished = true;
+              this.loading = false
+              this.finished = true
             } else {
-               this.articleList.push(...res.results)
-              this.loading = false;
+              this.articleList.push(...res.results)
+              this.loading = false
             }
           } else {
-            this.articleList = res.results;
-            this.isLoading = false;
+            this.articleList = res.results
+            this.isLoading = false
           }
         }
-      });
+      }).catch(error => {
+        this.$toast(error.message)
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped lang="stylus"></style>
