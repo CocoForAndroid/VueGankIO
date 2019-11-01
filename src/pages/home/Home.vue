@@ -1,19 +1,19 @@
 <template>
   <div class="wrapper">
     <tab-bar :arrays="tabs" @getSelectTab="handleTabChange"></tab-bar>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" v-if="currentTabIndex!=0">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" v-if="currentTabIndex!==0">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <article-list :items="articleList"></article-list>
       </van-list>
     </van-pull-refresh>
+    <empty-place-holder v-if="articleList.length===0&&currentTabIndex!==0"></empty-place-holder>
     <girl-list
-      v-if="currentTabIndex==0"
+      v-if="currentTabIndex===0"
       :img-array="girlImages"
       @handleImgClick="previewImg"
       @refreshGirl="getRandomGirls"
       :animateFinish="finishAnimate"
     ></girl-list>
-    <empty-place-holder v-if="articleList.length==0||girlImages.length==0"></empty-place-holder>
   </div>
 </template>
 
@@ -107,7 +107,7 @@ export default {
         } else {
           // 文章类型
           if (loadMore) {
-            if (res.results.length == 0) {
+            if (res.results.length === 0) {
               console.log('empty')
               this.loading = false
               this.finished = true

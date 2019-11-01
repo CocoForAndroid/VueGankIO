@@ -8,8 +8,8 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      meta:{
-        keepAlive:true
+      meta: {
+        keepAlive: true
       },
       component: () => import('./pages/home/Home.vue')
     },
